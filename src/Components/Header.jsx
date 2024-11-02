@@ -3,14 +3,12 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import "./Header.css";
 
 const Header = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ backgroundColor: "#000000", margin: "2px", width: "99.5%" }}
-      >
+    <Box className="navbar-container">
+      <AppBar position="static" className="navbar">
         <Toolbar variant="dense">
           <Typography variant="h6" component="div">
             XOGENE LOGO

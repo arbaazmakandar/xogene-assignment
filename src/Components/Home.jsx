@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import SearchBox from "./SearchBox";
 import SearchDrugs from "./SearchDrugs";
-import { useSnackbar } from "notistack";
-import { useState } from "react";
 import axios from "axios";
+import "./Home.css";
 
 const Home = ({ drugData, setDrugData }) => {
-  const { enqueueSnackbar } = useSnackbar();
   const [error, setError] = useState("");
 
   const onSearch = async (drug) => {
@@ -15,35 +13,32 @@ const Home = ({ drugData, setDrugData }) => {
       const response = await axios.get(
         `https://rxnav.nlm.nih.gov/REST/drugs.json?name=${drug}`
       );
-      console.log(response.data);
-      if (response.status === 200) {
-        setDrugData(response.data);
-      }
+      console.log(response);
 
-      if (response.data.drugGroup.name === null) {
-        setError(`Nothing could be found for that term.`);
+      if (response.status === 200) {
+        if (!response.data.drugGroup.hasOwnProperty("conceptGroup")) {
+          setError("Nothing could be found for that term.");
+          setDrugData("");
+        } else {
+          setDrugData(response.data);
+          setError(""); // Clear error if data is successfully found
+        }
       }
     } catch (error) {
-      if (error.response.drugGroup.name === null) {
-        enqueueSnackbar(`Nothing could be found for that term.`, {
-          variant: "error",
-        });
-      }
+      setError("An error occurred while fetching data.");
     }
   };
+
   return (
-    <div>
+    <>
       <Header />
-      &nbsp;&nbsp;
       <SearchBox onSearch={onSearch} setError={setError} />
-      &nbsp;&nbsp;
-      {error === "" ? <p>{error}</p> : <p></p>}
-      <div
-        style={{ display: "flex", justifyContent: "center", height: "35rem" }}
-      >
+      {error && <p>{error}</p>}
+      <div className="search-drugs">
         <SearchDrugs drugs={drugData} />
       </div>
-    </div>
+    </>
   );
 };
+
 export default Home;

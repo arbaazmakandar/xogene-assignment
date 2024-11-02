@@ -1,0 +1,13 @@
+.search-container {
+  padding: 20px;
+}
+
+.drug-item {
+  margin: 20px 0;
+}
+
+.open-drug-button {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}

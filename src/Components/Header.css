@@ -1,0 +1,9 @@
+.navbar-container {
+  flex-grow: 1;
+  background: #000000;
+}
+
+.navbar {
+  margin: 2px;
+  width: 100%;
+}

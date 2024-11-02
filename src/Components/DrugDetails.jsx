@@ -1,42 +1,30 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import Header from "./Header";
+import "./DrugDetails.css";
 
 const DrugDetails = () => {
   const location = useLocation();
 
   const drug = location?.state?.drug;
-  console.log(drug.conceptProperties);
   return (
     <>
       <Header />
-      <table>
-        <thead>
-          <tr>
-            <td style={{ display: "inline-block", margin: "20px" }}>Index</td>
-            <td style={{ display: "inline-block", margin: "20px" }}>Name</td>
-            <td style={{ display: "inline-block", margin: "20px" }}>Synonym</td>
-          </tr>
-        </thead>
-        <tbody>
-          {drug?.conceptProperties.map((element, index) => {
-            return (
-              <tr key={index}>
-                <td style={{ display: "inline-block", margin: "20px" }}>
-                  {index + 1}
-                </td>
+      <div className="container">
+        <div className="row header">
+          <div className="cell">Index</div>
+          <div className="cell">Name</div>
+          <div className="cell">Synonym</div>
+        </div>
 
-                <td style={{ display: "inline-block", margin: "20px" }}>
-                  {element.name}
-                </td>
-                <td style={{ display: "inline-block", margin: "20px" }}>
-                  {element.synonym}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+        {drug?.conceptProperties?.map((element, index) => (
+          <div className="row" key={index}>
+            <div className="cell centered">{index + 1}</div>
+            <div className="cell">{element.name}</div>
+            <div className="cell">{element.synonym}</div>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
